@@ -9,14 +9,17 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwt_decode from "jwt-decode";
+import { UserType } from "../UserContext";
 
 const LoginScreen = () => {
+  const { userId, setUserId } = useContext(UserType);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
@@ -45,12 +48,21 @@ const LoginScreen = () => {
 
     axios
       // .post("http://localhost:3000/login", user)
-      .post("http://192.168.117.165:8081/login", user)
+      //.post("http://192.168.117.165:8081/login", user)
+      .post("http://192.168.141.100:3000/login", user)
+      
       .then((response) => {
+
         console.log(response);
-        const token = response.data.token;
-        AsyncStorage.setItem("authToken", token);
+        const token1 = response.data.token;
+        const id = response.data.id;
+        AsyncStorage.setItem("authToken", token1);
+      // const decodedToken = jwt_decode(token1);
+      // const userId = decodedToken.userId;
+      console.log(id)
+      setUserId(id);
         navigation.navigate("Main");
+        
       })
       .catch((error) => {
         Alert.alert("Login error");
@@ -64,9 +76,7 @@ const LoginScreen = () => {
       <View style={{ marginTop: 50 }}>
         <Image
           style={{ width: 150, height: 100, resizeMode: "contain" }}
-          source={{
-            uri: "https://freelogopng.com/images/all_img/1688663386threads-logo-transparent.png",
-          }}
+          source={require("./Mumble.png")}
         />
       </View>
 

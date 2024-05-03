@@ -20,9 +20,12 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   verificationToken: String,
+
+},
+{
+  collection: "User",
 });
 
-
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

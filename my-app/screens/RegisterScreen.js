@@ -30,7 +30,8 @@ const RegisterScreen = () => {
 
     axios
       // .post("http://localhost:3000/register", user)
-      .post("http://192.168.117.165:8081/register", user)
+      //.post("http://192.168.117.165:8081/register", user)
+      .post("http://192.168.141.100:3000/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(
@@ -56,9 +57,7 @@ const RegisterScreen = () => {
       <View style={{ marginTop: 50 }}>
         <Image
           style={{ width: 150, height: 100, resizeMode: "contain" }}
-          source={{
-            uri: "https://freelogopng.com/images/all_img/1688663386threads-logo-transparent.png",
-          }}
+          source={require("./Mumble.png")}
         />
       </View>
 
